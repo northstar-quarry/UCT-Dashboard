@@ -44,7 +44,9 @@ def store(monkeypatch, tmp_path):
         if hasattr(bars_fetch, name):
             monkeypatch.setattr(bars_fetch, name, _no_provider)
     bars_fetch.cache.delete_prefix("bars_AAA_")
+    bars_fetch.cache.delete_prefix("dhole_")      # a hole repair's 6 h marker never leaks from one test into the next
     yield
+    bars_fetch.cache.delete_prefix("dhole_")
     bars_sqlite._drop_local_conn()
     bls._reset_for_tests()
 
